@@ -8,7 +8,8 @@
                 <h3 class="card-title">Users Table</h3>
 
                 <div class="card-tools">
-                   <button class="btn btn-success"  data-toggle="modal" data-target="#addNew">
+                   <button class="btn btn-success" @click="newModal"  > <!-- data-toggle="modal" data-target="#addNew" -->
+                   
                     <i class="fas fa-user-plus"></i> Add New
                    </button>
                 </div>
@@ -34,8 +35,8 @@
                       <td>{{ user.type |upText }}</td>
                       <td> {{user.created_at | myDate }} </td>
                       <td>
-                        <a href=""> <i class="fa fa-edit blue"></i> </a> /
-                        <a href=""> <i class="fa fa-trash red"></i> </a>
+                        <a href="" @click.prevent="editModal(user)"> <i class="fa fa-edit blue"></i> </a> /
+                        <a href="" @click.prevent="deleteUser(user.id)"> <i class="fa fa-trash red"></i> </a>
                       </td>
                     </tr>
                     
@@ -53,13 +54,15 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+                        <h5 v-if="!editMode" class="modal-title" id="exampleModalLabel">Add New User</h5>
+                        <h5 v-if="editMode" class="modal-title" id="exampleModalLabel">Update User's info</h5>
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <!-- ./FORM -->
-                    <form @submit.prevent="createUser" > 
+                    <form @submit.prevent="editMode ? updateUser() : createUser()" > 
                     <div class="modal-body">
                         <div class="form-group">
                             <input v-model="form.name" type="text" name="name"
@@ -102,8 +105,10 @@
                     
                    
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                          <button type="submit" class="btn btn-primary">Salvar</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button v-show='editMode' type="submit" class="btn btn-primary">Edit</button>
+                          <button v-show='!editMode' type="submit" class="btn btn-success">Create</button>
+
                       </div>
                     </form>
                      <!-- ./FORM -->
@@ -118,8 +123,10 @@
     export default {
       data(){
         return {
+          editMode:false,
           users:{},
           form: new Form({
+            id:'',
             name:'',
             email:'',
             password:'',
@@ -130,6 +137,83 @@
         }
       },
       methods:{
+        updateUser(){
+            this.$Progress.start()// progress bar
+
+            this.form.put('api/user/'+this.form.id)
+              .then(()=>{
+                  
+                this.$Progress.finish()// progress bar
+
+                swal.fire( /// all right 
+                  'Updated!',
+                  'Information has been updated.',
+                  'success'
+                )
+                Fire.$emit('AfterCreate');
+                $("#addNew").modal('hide') // hide when added user
+              })
+              .catch(()=>{
+                this.$Progress.fail()// progress bar
+              })
+          
+        },
+        editModal(user){
+
+          this.editMode = true
+          this.form.reset();
+          $('#addNew').modal('show')
+          this.form.fill(user)
+          
+        },
+        newModal(){
+           this.editMode = false
+           this.form.reset();
+           $('#addNew').modal('show')
+        },
+        deleteUser(id){
+
+          //show message
+          swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+
+          }).then((result) => {
+
+
+              if(result.value){// if user click yes
+
+                  // delete request
+                  this.form.delete('api/user/'+id)
+                    .then(()=>{ 
+
+                          // show feedback
+                          swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                          )
+                          // refresh users 
+                          Fire.$emit('AfterCreate');
+
+                    })
+                    .catch( ()=>{
+                        swal("Failed!","There something wrong","warning")
+                        this.$Progress.fail()// progress bar
+                    })
+              }
+                
+            });
+
+
+
+
+        },
         loadUsers(){
 
             axios.get('api/user')
@@ -138,12 +222,12 @@
         },
         createUser()
         {
+           
             this.$Progress.start()// progress bar
 
             this.form.post('api/user')
                 .then(()=>{
-                  
-                      
+ 
                       this.$Progress.finish()// progress bar
                 
                       toast.fire({ // ui : show to the user toast added
@@ -155,11 +239,10 @@
 
                       $("#addNew").modal('hide') // hide when added user
 
-
                 })
-                // .catch(()=>{
-
-                // })
+                .catch(()=>{
+                    this.$Progress.fail()// progress bar
+                })
 
            
 
