@@ -122,6 +122,14 @@ Vue.component(
 
 
 /**
+ * ACL
+ * ===============================================
+ */
+import Gate from './Gate'
+Vue.prototype.$gate = new Gate(window.user)
+
+
+/**
  * ==============================================
  * RENDER
  */

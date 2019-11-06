@@ -17,7 +17,9 @@
                         <!--<h5 class="widget-user-desc text-right">Web Designer</h5>-->
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="" alt="User Avatar">
+                        <img class="img-circle" 
+                             :src="getProfilePhoto()" 
+                             alt="User Avatar">
                     </div>
                     <div class="card-footer">
                     <div class="row">
@@ -75,7 +77,9 @@
                                                 class="form-control"
                                                 id="inputName"
                                                 placeholder="Name"
-                                                 v-model="form.name">
+                                                 v-model="form.name"
+                                                 :class="{ 'is-invalid': form.errors.has('name') }">
+                                        <has-error :form='form' field="name"> </has-error>
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -85,7 +89,10 @@
                                                 class="form-control"
                                                 id="inputEmail"
                                                 placeholder="Your Email"
-                                                v-model="form.email">
+                                                v-model="form.email"
+                                                :class="{ 'is-invalid': form.errors.has('email') }">
+                                                
+                                        <has-error :form='form' field="email"> </has-error>
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -95,18 +102,26 @@
                                                 class="form-control"
                                                 id="inputExperience"
                                                 placeholder="Experience"
-                                                ></textarea>
+                                                v-model="form.bio"
+                                                :class="{ 'is-invalid': form.errors.has('bio') }">
+                                                
+                                                </textarea>
+                                          <has-error :form='form' field="bio"> </has-error>
                                     </div>
                                 </div>
 
                                 <div class="form-group ">
-                                    <label for="inputPassport" class="col-sm-2 col-form-label">Passport</label>
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                                     <div class="col-sm-10">
-                                        <input type="email"
+                                        <span> Leave it empty if not change </span>
+                                        <input type="password"
                                                 class="form-control"
-                                                id="inputPassport"
-                                                placeholder="Passport"
-                                                >
+                                                id="inputPassword"
+                                                placeholder="Password"
+                                                v-model="form.password"
+                                                :class="{ 'is-invalid': form.errors.has('password') }">
+                                                
+                                        <has-error :form='form' field="password"> </has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -115,7 +130,9 @@
                                         <input type="file"
                                                 class=" "
                                                 id="inputFile"
-                                                @change="updateProfile">
+                                                @change="updateProfile"
+                                                :class="{ 'is-invalid': form.errors.has('file') }">
+                                         <has-error :form='form' field="file"> </has-error>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-10 mt-4 ">
@@ -151,24 +168,43 @@
             }
         },
         methods:{
+            getProfilePhoto(){
+                return "img/profile/"+this.form.photo;
+            },
             updateProfile(e){/*update image profile*/
             
                 let file = e.target.files[0];
                 let reader = new FileReader();
+                console.log(file)
+                if(file['size'] < 2111775){
+                    reader.onloadend = (file)=>{
 
-                reader.onloadend = (file)=>{
-                    this.form.photo = reader.result;
+                        this.form.photo = reader.result;
+                    }
+                    reader.readAsDataURL(file);
                 }
-                reader.readAsDataURL(file);
+                else{
+                    swal({
+                        type:'err',
+                        title:'Oops',
+                        text: 'File shoud be less than 2MB'
+                    })
+                }
+                
             },
             updateInfo(){
-
-                this.form.put('api/profile')
+                 this.$Progress.start()// progress bar
+                   
+                 this.form.put('api/profile')
                     .then(()=>{
-                        
+                        this.$Progress.finish()// progress bar
+                    })
+                    .then(()=>{
+                        location.reload();
+
                     })
                     .catch(()=>{
-
+                        this.$Progress.fail()// progress bar
                     })
 
             },
