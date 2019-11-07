@@ -13,7 +13,7 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #dfdfdf;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -43,19 +43,33 @@
             .content {
                 text-align: center;
             }
+            body .image{
 
+                background: url('img/blueprint.jpg');
+                background-size:cover;
+                position: absolute;
+                top:0;left:0;right:0;bottom:0;
+                content:"";
+                opacity:0.9;
+            }
             .title {
                 font-size: 84px;
             }
-
+            .links{
+                margin-top:1em;
+            }
             .links > a {
-                color: #636b6f;
+                color: #dfdfdf;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+                padding: 1em;
+                border: 2px solid white;
+                background:transparent;
+                
             }
 
             .m-b-md {
@@ -64,6 +78,7 @@
         </style>
     </head>
     <body>
+        <div class="image"></div>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -78,23 +93,21 @@
                     @endauth
                 </div>
             @endif
-
+            
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Red Blueprint
                 </div>
 
+                <h2> General App </h2>
+
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="/dashboard">
+                        Go To Dashboard
+                    </a>
                 </div>
             </div>
+            
         </div>
     </body>
 </html>

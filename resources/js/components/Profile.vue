@@ -1,20 +1,21 @@
 <style>
 .widget-user-header{
-    background: url('https://images.pexels.com/photos/592077/pexels-photo-592077.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500') center center;
+    background: url('../../../public/img/blueprint.jpg') center center;
     background-size:cover;
     min-height:300px;
 }
+ 
 </style>
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
+        <div class="row ">
+            <div class="col-md-8">
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header text-white" >
 
                         <h3 class="widget-user-username text-right">{{form.name}}</h3>
-                        <!--<h5 class="widget-user-desc text-right">Web Designer</h5>-->
+                        <h5 class="widget-user-desc text-right">{{ this.form.type | upText}}</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle" 
@@ -56,8 +57,8 @@
         </div>
         <!-- ./row -->
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="card col-md-12">
+            <div class="row "><!-- justify-content-center-->
+                <div class="card col-md-8">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Activity</a></li>

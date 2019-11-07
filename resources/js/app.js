@@ -15,9 +15,12 @@ Vue.use(VueRouter)
  * RECURSOS DO V-FORM
  */
 import { Form, HasError, AlertError } from 'vform'
+ 
 window.Form = Form
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+
+Vue.component('pagination', require('laravel-vue-pagination'))
 
 
 /**
@@ -29,11 +32,16 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
+    { path: '*', component: require('./components/NotFound.vue').default },
 
 ]
+Vue.component('not-found',
+    require('./components/NotFound.vue').default
+);
 const router = new VueRouter({
     mode:'history',
-    routes  
+    routes ,
+    
 })
 
 
@@ -135,5 +143,13 @@ Vue.prototype.$gate = new Gate(window.user)
  */
 new Vue({
     el:"#app",
-    router
+    router,
+    data:{
+        search:""
+    },
+    methods:{
+        searchUsers:_.debounce(()=>{
+            Fire.$emit('searching');
+        },1000)
+    }
 })
