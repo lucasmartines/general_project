@@ -24,3 +24,11 @@ $fa-font-path:        "../webfonts";
     }
     
 }
+@media print{
+    .navbar{
+        display:none;
+    }
+}
+@page{
+    margin:0;
+}

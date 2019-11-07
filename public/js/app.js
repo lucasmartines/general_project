@@ -1873,6 +1873,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('dashboard mounted.');
@@ -61527,9 +61528,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example dashboard.\n                "
-              )
+              _c("a", { attrs: { href: "/invoice" } }, [_vm._v("Invoice")])
             ])
           ])
         ])
@@ -79065,11 +79064,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
-var mode = 'production'; // window.appURL = 'http://localhost:8000'
-// if(mode === 'production'){
-//     window.appURL = 'https://le-general-app-estudo.herokuapp.com'
-// }
-
 /**
  * ==============================================
  * RECURSOS DO V-FORM
@@ -79188,7 +79182,10 @@ new Vue({
   methods: {
     searchUsers: _.debounce(function () {
       Fire.$emit('searching');
-    }, 1000)
+    }, 1000),
+    printme: function printme() {
+      window.print();
+    }
   }
 });
 

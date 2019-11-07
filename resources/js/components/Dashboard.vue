@@ -8,7 +8,8 @@
                     </div>
 
                     <div class="card-body">
-                        I'm an example dashboard.
+                        
+                        <a href="/invoice">Invoice</a>
                     </div>
                 </div>
             </div>
