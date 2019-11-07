@@ -64,7 +64,10 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
-            "@php artisan passport:install"
+            "@php artisan passport:install",
+            "@php artisan cache:clear",
+            "@php artisan config:clear",
+            "@php artisan route:cache "
             
         ]
     }
