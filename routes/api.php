@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\App;
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

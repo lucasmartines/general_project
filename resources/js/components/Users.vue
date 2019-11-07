@@ -150,7 +150,7 @@
         {
           
            if( this.$gate.isAdminOrAuthor() ){
-              axios.get( appURL + '/api/user/?page=' + page)
+              axios.get(  'api/user/?page=' + page)
                 .then(response => {
                   this.users = response.data;
                    

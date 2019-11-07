@@ -10,11 +10,11 @@ Vue.use(VueRouter)
 
 let mode = 'production';
 
-window.appURL = 'http://localhost:8000'
+// window.appURL = 'http://localhost:8000'
 
-if(mode === 'production'){
-    window.appURL = 'https://le-general-app-estudo.herokuapp.com'
-}
+// if(mode === 'production'){
+//     window.appURL = 'https://le-general-app-estudo.herokuapp.com'
+// }
 
 /**
  * ==============================================
