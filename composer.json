@@ -65,6 +65,7 @@
         ],
         "post-install-cmd": [
             "@php artisan passport:install"
+            
         ]
     }
 }
