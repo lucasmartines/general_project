@@ -2334,7 +2334,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
       if (this.$gate.isAdminOrAuthor()) {
-        axios.get('api/user/?page=' + page).then(function (response) {
+        axios.get(appURL + '/api/user/?page=' + page).then(function (response) {
           _this.users = response.data;
         });
       }
@@ -79065,10 +79065,18 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var mode = 'production';
+
+if (mode === 'production') {
+  window.appURL = 'https://le-general-app-estudo.herokuapp.com';
+} else {
+  window.appURL = 'http://localhost:8000';
+}
 /**
  * ==============================================
  * RECURSOS DO V-FORM
  */
+
 
 
 window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];

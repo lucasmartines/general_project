@@ -148,12 +148,15 @@
       methods:{
         getUsers(page = 1) 
         {
+          
            if( this.$gate.isAdminOrAuthor() ){
-              axios.get('//api/user/?page=' + page)
+              axios.get( appURL + '/api/user/?page=' + page)
                 .then(response => {
                   this.users = response.data;
                    
-              });
+            });
+       
+            
            }
         },
         updateUser(){

@@ -8,7 +8,14 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+let mode = 'production';
 
+if(mode === 'production'){
+    window.appURL = 'https://le-general-app-estudo.herokuapp.com'
+}
+else{
+    window.appURL = 'http://localhost:8000'
+}
 
 /**
  * ==============================================
