@@ -2334,7 +2334,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
       if (this.$gate.isAdminOrAuthor()) {
-        axios.get('api/user/?page=' + page).then(function (response) {
+        axios.get('api/user?page=' + page).then(function (response) {
           _this.users = response.data;
         });
       }
