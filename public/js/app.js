@@ -79066,11 +79066,10 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var mode = 'production';
+window.appURL = 'http://localhost:8000';
 
 if (mode === 'production') {
   window.appURL = 'https://le-general-app-estudo.herokuapp.com';
-} else {
-  window.appURL = 'http://localhost:8000';
 }
 /**
  * ==============================================
